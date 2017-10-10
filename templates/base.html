@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="WebVirtMgr panel for manage virtual machine">
+
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <!-- Aditional CSS -->
+    {% block style %}{% endblock %}
+
+  </head>
+
+  <body>
+
+    <div class="container">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Sner4</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="list">NetMap</a></li>
+			      <li><a href="#">Page 1</a></li>
+			      <li><a href="#">Page 2</a></li>
+				  <li><a href="#">Page 3</a></li>
+			    </ul>
+			  </div>
+		</nav>
+
+    {% block content %}{% endblock %}
+
+    </div> <!-- /container -->
+
+
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    {% block script %}{% endblock %}
+  </body>
+</html>

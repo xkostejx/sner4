@@ -1,0 +1,4 @@
+apps/settings.py
+download/
+*.pyc
+
