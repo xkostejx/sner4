@@ -9,32 +9,32 @@ from .models import Net
 
 def index(request):
 #    return HttpResponse("New project!")
-     return redirect(netmap_list)
+     return redirect(net_list)
 
-def netmap_list(request, template_name='list.html'):
+def net_list(request, template_name='net/list.html'):
     nets = Net.objects.all()
     data = {}
     data['net_list'] = nets
     return render(request, template_name, data)
 
-def netmap_add(request, template_name='addedit.html'):
+def net_add(request, template_name='net/addedit.html'):
     form = NetForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect(netmap_list)
+        return redirect(net_list)
     return render(request, template_name, {'form':form})
 
-def netmap_edit(request, pk, template_name='addedit.html'):
-    netmap = get_object_or_404(Net, pk=pk)
-    form = NetForm(request.POST or None, instance=netmap)
+def net_edit(request, pk, template_name='net/addedit.html'):
+    net = get_object_or_404(Net, pk=pk)
+    form = NetForm(request.POST or None, instance=net)
     if form.is_valid():
         form.save()
-        return redirect(netmap_list)
+        return redirect(net_list)
     return render(request, template_name, {'form':form})
 
-def netmap_delete(request, pk):
-    netmap = get_object_or_404(Net, pk=pk)    
+def net_delete(request, pk):
+    net = get_object_or_404(Net, pk=pk)    
     if request.method=='POST':
-        netmap.delete()
-    return redirect(netmap_list)
+        net.delete()
+    return redirect(net_list)
 # Create your views here.

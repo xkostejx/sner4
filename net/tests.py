@@ -43,18 +43,18 @@ class NetMapTest(unittest.TestCase):
         self.client = Client()
 
     def test_list(self):
-        response = self.client.get(reverse('netmap_list'))
+        response = self.client.get(reverse('net_list'))
         self.assertEqual(response.status_code, 200)
     
     def test_nets_exists(self):
         net = self.get_random_Net()
         net.save()
-        response = self.client.get(reverse('netmap_edit', args=[net.id]))
+        response = self.client.get(reverse('net_edit', args=[net.id]))
         self.assertEqual(response.status_code, 200)
    
     def test_net_add(self):
         net = self.get_random_Net()
-        response = self.client.post(reverse('netmap_add'), model_to_dict(net))
+        response = self.client.post(reverse('net_add'), model_to_dict(net))
         self.assertEquals(response.status_code, 302)
 
         net_db = Net.objects.last()
@@ -63,7 +63,7 @@ class NetMapTest(unittest.TestCase):
     def test_net_edit(self):
         net = self.get_random_Net()
         net.save()
-        response =  self.client.get(reverse('netmap_edit', args=[net.id]))
+        response =  self.client.get(reverse('net_edit', args=[net.id]))
         form = response.context['form']
         data = form.initial
        
@@ -75,7 +75,7 @@ class NetMapTest(unittest.TestCase):
         data['description'] = net_edit.description
         data['note'] = net_edit.note
 
-        response = self.client.post(reverse('netmap_edit', args=[net.id]),data)
+        response = self.client.post(reverse('net_edit', args=[net.id]),data)
         self.assertEquals(response.status_code, 302)
 
         net_db = Net.objects.get(id=net.id)
