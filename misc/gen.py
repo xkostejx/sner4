@@ -6,7 +6,7 @@ M = 16**4
 firstid = 1
 lastid = 100
 
-print "COPY netmap_net (id, cidr, ip_first, ip_last, organization, description, note) FROM stdin;"
+print "COPY net_net (id, cidr, ip_first, ip_last, organization, description, note) FROM stdin;"
 
 for i in xrange(firstid, lastid):
     ip, cidr, ip_first, ip_last, organization, description, note = (None, None, None, None, None, None, None)
@@ -30,4 +30,4 @@ for i in xrange(firstid, lastid):
 
 print "\."
 
-print "SELECT pg_catalog.setval('netmap_net_id_seq', %s, true);" % (lastid-1)
+print "SELECT pg_catalog.setval('net_net_id_seq', %s, true);" % (lastid-1)
