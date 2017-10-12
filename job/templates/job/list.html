@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/theme.bootstrap_3.min.css" %}">
+<link rel="stylesheet" href="{% static "css/jquery.tablesorter.pager.min.css" %}">
+{% endblock %}
+{% block content %}
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{% trans "Jobs" %}</h1>
+        <a href="add" class="btn btn-primary" role="button">Add new</a>
+        <br/>
+        <br/>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            {% if not job_list %}
+            <div class="col-lg-12">
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="fa fa-exclamation-triangle"></i> <strong>{% trans "Warning:" %}</strong> {% trans "You don't have any job!" %}
+                </div>
+            </div>
+            {% else %}
+
+            <table id="table-jobs">
+                <thead>
+                    <tr>
+                        <th>Params</th>
+                        <th>Status</th>
+                        <th>Result</th>
+                        <th>Result_data</th>
+                        <th>AgentID</th>
+                        <th>Created</th>
+                        <th>Finished</th>
+                        <th>Priority</th>
+                        <th class="filter-false sorter-false">Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th colspan="9" class="ts-pager form-inline">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-default first"><span class="glyphicon glyphicon-step-backward"></span></button>
+                                <button type="button" class="btn btn-default prev"><span class="glyphicon glyphicon-backward"></span></button>
+                            </div>
+                            <span class="pagedisplay"></span>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-default next"><span class="glyphicon glyphicon-forward"></span></button>
+                                <button type="button" class="btn btn-default last"><span class="glyphicon glyphicon-step-forward"></span></button>
+                            </div>
+                            <select class="form-control input-sm pagesize" title="Select page size">
+                                <option selected="selected" value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="all">All Rows</option>
+                            </select>
+                            <select class="form-control input-sm pagenum" title="Select page number"></select>
+                        </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for job in job_list %}
+                    <tr>
+                        <td>{{ job.params }}</td>
+                        <td>{{ job.status }}</td>
+                        <td>{{ job.result }}</td>
+                        <td>{{ job.result_data }}</td>
+                        <td>{{ job.agentid }}</td>
+                        <td>{{ job.created }}</td>
+                        <td>{{ job.finished }}</td>
+                        <td>{{ job.priority }}</td>
+                        <td>
+                            <a href="show/{{ job.id }}" class="btn btn-sm btn-default" name="edit" title="{% trans " Edit " %}">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </a>
+                            <a href="delete/{{ job.id }}" class="btn btn-sm btn-default" name="delete" title="{% trans " Delete " %}" onclick="return confirm('Are you sure?')">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %} 
+<script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
+<script src="{% static "js/jquery.tablesorter.widgets.min.js" %}"></script>
+<script src="{% static "js/jquery.tablesorter.pager.min.js" %}"></script>
+<script>
+$(function(){
+	var options = {
+		theme: 'bootstrap',
+		headerTemplate : '{content} {icon}',
+		widgets: [ 'uitheme', 'zebra', 'filter', 'columns' ],
+	};
+
+    var options_pager =  {
+    	container: $(".ts-pager"),
+    	cssGoto  : ".pagenum",
+    	output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+ 	};
+
+	$("#table-jobs").tablesorter(options).tablesorterPager(options_pager);
+});
+</script>
+{% endblock %} 
